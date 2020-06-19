@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    .container
+        #login_view
+            h1 Please login
+            form(method='post')
+                .login_container
+                    label(for='login')
+                        b Login
+                    input#login(type='text' placeholder='Enter Login' required='' name='login')
+                    label(for='password')
+                        b Password
+                    input#password(type='password' placeholder='Enter Password' required='' name='password')
+                    input(type="submit" class='button capitalize' value="Login")

@@ -1,0 +1,60 @@
+#!/usr/bin/env node
+
+let sqlite3 = require('sqlite3').verbose()
+
+let algebraQuizJSON = `[
+          {
+            "question": "2 + 3",
+            "answers": [5, 6, 7, 8, 9],
+            "penalty": 4
+          },
+          {
+            "question": "13 - 4",
+            "answers": [5, 9, 8, 2],
+            "penalty": 10
+          },
+          {
+            "question": "2 - (-24 : 4)",
+            "answers": [8, 10, -8, -4],
+            "penalty": 7
+          },
+          {
+            "question": "7 * 8",
+            "answers": [48, 56, 63, 54],
+            "penalty": 100
+          }
+        ]`;
+
+let algebraQuizCorrectAnswers = `{"answers": [5, 9, 8, 56]}`;
+
+let simpleQuizJSON = `[
+          {
+            "question": "1 + 1",
+            "answers": [0, 1, 2, 3],
+            "penalty": 4
+          },
+          {
+            "question": "2 * 2",
+            "answers": [0, 1, 2, 3],
+            "penalty": 4
+          }
+        ]`;
+
+let simpleQuizCorrectAnswers = `{"answers": [2, 4]}`;
+
+let db = new sqlite3.Database('./database.db');
+
+db.serialize(function () {
+    db.run("DROP TABLE IF EXISTS users");
+    db.run("DROP TABLE IF EXISTS quizzes");
+    db.run("DROP TABLE IF EXISTS stats");
+    db.run("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username varchar, password varchar)");
+    db.run("CREATE TABLE quizzes (id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar, data varchar, answers varchar)");
+    db.run("CREATE TABLE stats (quiz_id INTEGER, user_id INTEGER, score INTEGER, answers varchar, time_spent varchar)");
+    db.run("INSERT INTO users (username, password) VALUES ('user_1', 'user_1')");
+    db.run("INSERT INTO users (username, password) VALUES ('user_2', 'user_2')");
+    db.run("INSERT INTO quizzes (name, data, answers) VALUES ('Algebra Quiz', ?, ?)", [algebraQuizJSON, algebraQuizCorrectAnswers]);
+    db.run("INSERT INTO quizzes (name, data, answers) VALUES ('Simple Quiz', ?, ?)", [simpleQuizJSON, simpleQuizCorrectAnswers]);
+    db.run("INSERT INTO quizzes (name, data, answers) VALUES ('Simple Quiz 2', ?, ?)", [simpleQuizJSON, simpleQuizCorrectAnswers]);
+    db.run("INSERT INTO quizzes (name, data, answers) VALUES ('Simple Quiz 3', ?, ?)", [simpleQuizJSON, simpleQuizCorrectAnswers]);
+})

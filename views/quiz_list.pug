@@ -1,0 +1,24 @@
+extends layout
+
+block content
+    .container
+        #quiz_list_view
+            .topnav.capitalize
+                a(href='/') Home
+                a(href='/history') History
+                a(href='/change_password') Change Password
+                a(href='/logout') Logout
+            if show_history
+                h1 Submitted Quizzes
+            else
+                h1 Start New Quiz!
+            table
+                each quiz in list
+                    if show_history
+                        - var url = "quiz_history/" + quiz.id
+                    else
+                        -var url = "quiz/" + quiz.id
+                    tr
+                        td
+                            a(href=url name='link') #{quiz.name}
+

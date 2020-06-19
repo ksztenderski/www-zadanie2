@@ -1,0 +1,45 @@
+doctype html
+html
+    head
+        title= Quiz
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        block content
+            .container
+                #start_view
+                    h1#quiz_title(quiz_id=quiz_id) #{quiz_name}
+                    table#top_scores
+                    a(href='/' class='button capitalize') cancel
+                    if show_history
+                        #start_button.button.capitalize show quiz
+                    else
+                        #start_button.button.capitalize start quiz
+                #quiz_view
+                    h1.quiz_time Algebra for Dummies
+                    if show_history
+                        h1.quiz_finished Quiz history
+                    else
+                        h1.quiz_finished Quiz Finished!
+                    p#score.quiz_finished
+                    .save_result_buttons.quiz_finished
+                        a(href='/' class='button capitalize')#home go back to start page
+                    .addons
+                        p#question_number.addons_item
+                        p#timer.addons_item 00:00
+                        p#penalty.addons_item
+                    p#question
+                    #answers
+                    .buttons_container
+                        #cancel_button.button.question_button.capitalize.quiz_time
+                            | cancel
+                        .right_side_buttons_container
+                            #finish_button.disabled_button.question_button.capitalize.quiz_time
+                                | finish
+                            #previous_question_button.disabled_button.question_button.capitalize
+                                | previous
+                            #next_question_button.button.capitalize
+                                | next
+                #cancel_view
+                    h1 Quiz Canceled
+                    a(href='/' class='button capitalize') go back to start page
+script(src='../quiz.js')

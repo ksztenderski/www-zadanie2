@@ -1,0 +1,263 @@
+:root {
+    --light-color1: #f8f3eb;
+    --light-color2: #f1e8d9;
+    --light-color3: #ebddc7;
+    --first-color1: #ef962d;
+    --first-color2: #ed8c1a;
+    --second-color: #9c5518;
+    --dark-color: #5a3f11;
+}
+
+input[type="submit"] {
+    padding: 15px 42px 30px;
+}
+
+body {
+    background-color: var(--light-color1);
+    text-align: center;
+    font-size: 24px;
+    font-family: "Courier 10 Pitch", sans-serif;
+}
+
+h1 {
+    color: var(--light-color1);
+}
+
+.container {
+    background-color: var(--second-color);
+    color: var(--light-color1);
+    padding: 10px;
+    margin: 0 20% 0;
+}
+
+.button, .disabled_button {
+    background-color: var(--first-color1);
+    border: none;
+    color: var(--light-color1);
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    max-height: 15px;
+    font-size: 16px;
+    margin: 15px 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: var(--first-color2);
+}
+
+.disabled_button {
+    background-color: var(--light-color3);
+    cursor: default;
+}
+
+.capitalize {
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+/******************** Login view ********************/
+
+.topnav {
+    margin: 0 10%;
+    overflow: hidden;
+    background-color: var(--first-color1);
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    color: var(--light-color1);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: var(--light-color1);
+    color: var(--first-color1);
+}
+
+.login_container {
+    margin: 0 10% 0 10%;
+    width: 80%;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/****************** Quiz list view ******************/
+
+a {
+    text-decoration: none;
+}
+
+tr:nth-child(odd) > td > a {
+    color: var(--first-color1);
+}
+
+tr:nth-child(even) > td > a {
+    color: var(--light-color1);
+}
+
+/******************** Start view ********************/
+
+table {
+    border-collapse: collapse;
+    margin: auto auto 3%;
+    width: 80%;
+}
+
+td, th {
+    padding: 8px;
+}
+
+tr:nth-child(odd) {
+    background-color: var(--light-color1);
+    color: var(--first-color1);
+}
+
+tr:nth-child(even) {
+    background-color: var(--first-color1);
+}
+
+/******************** Quiz view ********************/
+
+#quiz_view {
+    display: none;
+}
+
+.buttons_container {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: auto 7%;
+}
+
+.right_side_buttons_container {
+    grid-column-start: 2;
+    text-align: right;
+}
+
+.question_button {
+    width: 85px;
+}
+
+.radio {
+    background-color: var(--light-color2);
+    color: var(--dark-color);
+    margin: 1px 7%;
+    display: block;
+    position: relative;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Hide the browser's default radio button */
+.radio input {
+    position: absolute;
+    opacity: 0;
+}
+
+.checkmark {
+    position: absolute;
+    margin: auto;
+    left: 10px;
+    height: 25px;
+    width: 25px;
+    background-color: var(--light-color1);
+    border-radius: 50%;
+}
+
+.radio_active:hover {
+    background-color: var(--light-color3);
+}
+
+.radio input:checked ~ .checkmark {
+    background-color: var(--first-color2);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.radio input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.radio .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+.addons {
+    display: grid;
+    margin: auto 7%;
+    grid-template-columns: 30% auto [timer_start] 30% auto [penalty_start] 30%;
+}
+
+#question_number, #penalty, #timer {
+    background-color: var(--light-color2);
+    color: var(--dark-color);
+    padding: 5px;
+    font-size: 35px;
+}
+
+.addons_item:nth-child(2) {
+    grid-column-start: timer_start;
+}
+
+.addons_item:nth-child(3) {
+    grid-column-start: penalty_start;
+}
+
+#question {
+    font-size: 40px;
+}
+
+.answer {
+    display: none;
+}
+
+/******************** Finish view ********************/
+
+.quiz_finished {
+    display: none;
+}
+
+#score {
+    font-size: 35px;
+}
+
+/******************** Cancel view ********************/
+
+#cancel_view {
+    display: none;
+}
+
+/*************** Small screen settings ***************/
+
+@media only screen and (max-width: 1200px) {
+    #question_number, #timer, #penalty, #cancel_button {
+        display: none;
+    }
+
+    .addons {
+        display: block;
+    }
+}
