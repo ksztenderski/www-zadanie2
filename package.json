@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build": "tsc app.ts && tsc routes/index.ts && tsc routes/users.ts && tsc public/quiz.ts",
     "start": "node ./bin/www",
     "createdb": "node createdb",
     "test": "npx mocha -r ts-node/register tests.ts"
