@@ -7,7 +7,7 @@ function checkSession(req, resolve, reject) {
     } else {
         req.db.get("SELECT * FROM users WHERE id = ?", [req.session.user_id],
             function (err, row) {
-                if (row !== undefined && req.session.hash === req.sha256(row.password)) {
+                if (row !== undefined && req.session.hash === req.sha256(row.salt + row.password)) {
                     resolve();
                 } else {
                     reject();
@@ -54,7 +54,7 @@ router.post('/', function (req, res) {
         function (err, row) {
             if (row !== undefined) {
                 req.session.user_id = row.id;
-                req.session.hash = req.sha256(row.password);
+                req.session.hash = req.sha256(row.salt + row.password);
             }
             res.redirect('/');
         })
@@ -86,8 +86,9 @@ router.post('/changed_password', function (req, res) {
                     error: "New passwords don't match."
                 });
             } else {
-                req.db.run("UPDATE users SET password = ? WHERE id = ?", [req.body.new_password, req.session.user_id]);
-                req.session.hash = req.sha256(req.body.new_password);
+                let salt = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+                req.db.run("UPDATE users SET password = ?, salt = ? WHERE id = ?", [req.body.new_password, salt, req.session.user_id]);
+                req.session.hash = req.sha256(salt + req.body.new_password);
                 res.redirect('/');
             }
         });
@@ -109,19 +110,13 @@ router.get('/quiz/:quizId', function (req, res) {
                                 });
                             } else {
                                 // Trying to get already submitted quiz.
-                                res.render('wrong_quiz_request', {
-                                    message: 'You\'ve already submitted this quiz.',
-                                    url: '/quiz_history/' + req.params.quizId,
-                                    text: 'Go to the quiz'
+                                res.render('quiz_submitted', {
+                                    quizId: req.params.quizId
                                 });
                             }
                         });
                 } else {
-                    res.render('wrong_quiz_request', {
-                        message: 'Quiz not found.',
-                        url: '/',
-                        text: 'Go back to home page'
-                    });
+                    res.render('quiz_not_found');
                 }
             });
 
@@ -143,19 +138,13 @@ router.get('/quiz_history/:quizId', function (req, res) {
                                     show_history: true
                                 });
                             } else {
-                                res.render('wrong_quiz_request', {
-                                    message: 'You haven\'t submitted this quiz yet.',
-                                    url: '/quiz/' + req.params.quizId,
-                                    text: 'Go to the quiz'
+                                res.render('quiz_not_submitted', {
+                                    quizId: req.params.quizId
                                 })
                             }
                         });
                 } else {
-                    res.render('wrong_quiz_request', {
-                        message: 'Quiz not found.',
-                        url: '/',
-                        text: 'Go back to home page'
-                    })
+                    res.render('quiz_not_found')
                 }
             });
     });

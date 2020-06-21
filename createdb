@@ -48,11 +48,11 @@ db.serialize(function () {
     db.run("DROP TABLE IF EXISTS users");
     db.run("DROP TABLE IF EXISTS quizzes");
     db.run("DROP TABLE IF EXISTS stats");
-    db.run("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username varchar, password varchar)");
+    db.run("CREATE TABLE users (id INTEGER PRIMARY KEY AUTOINCREMENT, username varchar, password varchar, salt varchar)");
     db.run("CREATE TABLE quizzes (id INTEGER PRIMARY KEY AUTOINCREMENT, name varchar, data varchar, answers varchar)");
     db.run("CREATE TABLE stats (quiz_id INTEGER, user_id INTEGER, score INTEGER, answers varchar, time_spent varchar)");
-    db.run("INSERT INTO users (username, password) VALUES ('user_1', 'user_1')");
-    db.run("INSERT INTO users (username, password) VALUES ('user_2', 'user_2')");
+    db.run("INSERT INTO users (username, password, salt) VALUES ('user_1', 'user_1', 'NJpZI2zWxAb866tDTPkG9v')");
+    db.run("INSERT INTO users (username, password, salt) VALUES ('user_2', 'user_2', 'MffMRp1d1IsIB87niG51VK')");
     db.run("INSERT INTO quizzes (name, data, answers) VALUES ('Algebra Quiz', ?, ?)", [algebraQuizJSON, algebraQuizCorrectAnswers]);
     db.run("INSERT INTO quizzes (name, data, answers) VALUES ('Simple Quiz', ?, ?)", [simpleQuizJSON, simpleQuizCorrectAnswers]);
     db.run("INSERT INTO quizzes (name, data, answers) VALUES ('Simple Quiz 2', ?, ?)", [simpleQuizJSON, simpleQuizCorrectAnswers]);

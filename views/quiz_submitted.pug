@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    .container
+        h1 You've already submitted this quiz.
+        -var url = '/quiz_history/' + quizId
+        a(href=url class='button capitalize margin') Go to the quiz
+
