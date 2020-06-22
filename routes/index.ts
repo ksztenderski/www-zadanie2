@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+import {expect} from 'chai';
 
 function checkSession(req, resolve, reject) {
     if (req.session.user_id === undefined) {
@@ -225,10 +226,14 @@ router.post('/quiz_answers/:quizId', function (req, res) {
                     let request = req.body;
                     let data = JSON.parse(row.data);
                     let correctAnswers = JSON.parse(row.answers).answers;
+                    let sum = 0;
 
                     for (let i = 0; i < correctAnswers.length; i++) {
+                        sum += request.time_spent[i];
                         timeSpent.push(quizTime * request.time_spent[i]);
                     }
+                    console.log(sum);
+                    expect(sum).closeTo(1,0.01);
                     for (let i = 0; i < data.length; i++) {
                         if (correctAnswers[i] != request.answers[i]) {
                             quizTime += data[i].penalty;

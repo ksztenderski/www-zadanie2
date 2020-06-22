@@ -42,12 +42,10 @@ describe('tests', function () {
 
         await login('abc');
         await changePassword('abc', 'user_1');
-        await driver.find('[href="/logout"').click();
+        await driver.find('[href="/logout"]').click();
     });
 
-    it('same quiz test', async function () {
-        this.timeout(20000);
-
+    async function openQuiz() {
         await login('user_1');
 
         let links = await driver.findElements(By.name('link'));
@@ -56,9 +54,9 @@ describe('tests', function () {
             return;
         }
         await links[0].click();
+    }
 
-        let quizId = await (await driver.findElement(By.id('quiz_title'))).getAttribute('quiz_id');
-
+    async function doQuiz() {
         await driver.findElement(By.id('start_button')).click();
 
         let button = await driver.findElement(By.id('next_question_button'));
@@ -72,11 +70,37 @@ describe('tests', function () {
 
         await driver.findElement(By.name('question' + nr)).click();
         await driver.findElement(By.id('finish_button')).click();
+    }
+
+    it('same quiz test', async function () {
+        this.timeout(20000);
+
+        await openQuiz();
+
+        let quizId = await (await driver.findElement(By.id('quiz_title'))).getAttribute('quiz_id');
+
+        await doQuiz();
 
         await driver.findElement(By.id('home')).click();
 
         await driver.get('http://localhost:3000/quiz/' + quizId);
 
         expect(await driver.find('h1').getText()).equal('You\'ve already submitted this quiz.');
+
+        await driver.get('http://localhost:3000/');
+        await driver.find('[href="/logout"]').click();
+    });
+
+    it('percentage time test', async function () {
+        this.timeout(20000);
+
+        await openQuiz();
+
+        await new Promise(res => setTimeout(_ => res(), 3000));
+
+        await doQuiz();
+
+        await driver.get('http://localhost:3000/');
+        await driver.find('[href="/logout"]').click();
     })
 })

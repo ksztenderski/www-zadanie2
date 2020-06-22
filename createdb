@@ -35,12 +35,42 @@ let simpleQuizJSON = `[
           },
           {
             "question": "2 * 2",
-            "answers": [0, 1, 2, 3],
+            "answers": [0, 1, 2, 4],
+            "penalty": 4
+          },
+          {
+            "question": "2 * 2",
+            "answers": [0, 1, 2, 4],
+            "penalty": 4
+          },
+          {
+            "question": "2 * 2",
+            "answers": [0, 1, 2, 4],
+            "penalty": 4
+          },
+          {
+            "question": "2 * 2",
+            "answers": [0, 1, 2, 4],
+            "penalty": 4
+          },
+          {
+            "question": "2 * 2",
+            "answers": [0, 1, 2, 4],
+            "penalty": 4
+          },
+          {
+            "question": "2 * 2",
+            "answers": [0, 1, 2, 4],
+            "penalty": 4
+          },
+          {
+            "question": "2 * 2",
+            "answers": [0, 1, 2, 4],
             "penalty": 4
           }
         ]`;
 
-let simpleQuizCorrectAnswers = `{"answers": [2, 4]}`;
+let simpleQuizCorrectAnswers = `{"answers": [2, 4, 4, 4, 4, 4, 4, 4]}`;
 
 let db = new sqlite3.Database('./database.db');
 
